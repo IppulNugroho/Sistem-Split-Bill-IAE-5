@@ -13,11 +13,28 @@ type Bill {
   participants: [Participant!]!
 }
 
+type DeleteResponse {
+  success: Boolean!
+  message: String!
+}
+
 type Query {
   getBills: [Bill!]!
+  getBill(id: ID!): Bill!
 }
 
 type Mutation {
   createBill(title: String!, totalAmount: Float!, date: String!): Bill!
+  updateBill(id: ID!, title: String, totalAmount: Float, date: String): Bill!
+  deleteBill(id: ID!): DeleteResponse!
+
   addParticipant(billId: ID!, name: String!, amountOwed: Float!): Participant!
+  updateParticipant(
+    billId: ID!
+    participantId: ID!
+    name: String
+    amountOwed: Float
+    isPaid: Boolean
+  ): Participant!
+  removeParticipant(billId: ID!, participantId: ID!): DeleteResponse!
 }
