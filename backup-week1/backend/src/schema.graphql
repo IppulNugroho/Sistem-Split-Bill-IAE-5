@@ -1,0 +1,23 @@
+type Participant {
+  id: ID!
+  name: String!
+  amountOwed: Float!
+  isPaid: Boolean!
+}
+
+type Bill {
+  id: ID!
+  title: String!
+  totalAmount: Float!
+  date: String!
+  participants: [Participant!]!
+}
+
+type Query {
+  getBills: [Bill!]!
+}
+
+type Mutation {
+  createBill(title: String!, totalAmount: Float!, date: String!): Bill!
+  addParticipant(billId: ID!, name: String!, amountOwed: Float!): Participant!
+}
