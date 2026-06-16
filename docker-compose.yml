@@ -1,0 +1,26 @@
+services:
+  # ── Backend (Apollo GraphQL Server) ──────────────────────────
+  backend:
+    build: ./backend
+    container_name: splitbill-backend
+    ports:
+      - "4000:4000"
+    environment:
+      - MONGODB_URI=mongodb://mongo:27017/splitbill
+    depends_on:
+      mongo:
+        condition: service_started
+    restart: unless-stopped
+
+  # ── Database (MongoDB) ──────────────────────────────────────
+  mongo:
+    image: mongo:7
+    container_name: splitbill-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    restart: unless-stopped
+
+volumes:
+  mongo-data:
